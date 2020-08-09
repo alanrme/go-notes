@@ -1,4 +1,4 @@
-module go-database
+module go-notes
 
 go 1.14
 
