@@ -16,3 +16,6 @@
 
 # databases
 *.db
+
+#Binaries
+go-notes

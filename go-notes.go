@@ -47,6 +47,7 @@ func main() {
 
 	// list of all the notes stored
 	notes := widget.NewVBox()
+
 	db.View(func(tx *bolt.Tx) error {
 		// bucket is Notes
 		b := tx.Bucket([]byte("Notes"))
@@ -81,6 +82,10 @@ func main() {
 					// key is title, value is note content
 					err := b.Put([]byte(title.Text), []byte(content.Text))
 					if err == nil {
+						key := title.Text // cache the value so it exists when button clicked
+						notes.Append(widget.NewButton(key, func() {
+							title2.SetText(key)
+						}))
 						msg.SetText("Saved!")
 					} else {
 						msg.SetText("Error. Check console for details.")
@@ -116,6 +121,7 @@ func main() {
 					// key is title, value is note content
 					b.Delete([]byte(title2.Text))
 					msg.SetText("Deleted!")
+					title2.SetText("")
 					return nil
 				})
 			}),
